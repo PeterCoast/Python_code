@@ -2,6 +2,7 @@
 ## 目标数据源分析
 ### 本次待抓取的目标地址为：
 > <https://bbs.mihoyo.com/dby/home/47?type=2>  
+  
 [插图1.png](https://img12.360buyimg.com/ddimg/jfs/t1/189896/39/15504/405055/6104bba8E3bda95d5/24dcefbe9f93d02b.png)  
 该页面为图片列表页，采用下拉浏览器刷新形式进行数据加载。  
   
@@ -41,6 +42,7 @@ JSON 格式数据解析
   
 最终得到的数据接口如下：  
 > <https://bbs-api.mihoyo.com/post/wapi/getForumPostList?forum_id=47&gids=5&is_good=false&is_hot=false&last_id=6309404&page_size>  
+  
 该接口通过 `GET` 形式访问，其中参数中可依据名字进行猜测：  
 * `page_size`：每页数据量，默认是 20；
 * `forum_id`：板块 ID，与 URL 地址一致，为 47；  
@@ -52,10 +54,12 @@ JSON 格式数据解析
 继续针对图片详情页进行分析，打开任意详情页。
 
 > <https://bbs.mihoyo.com/dby/article/6270759>  
+
 该页面详情页地址，只有最后的数字 `6270759` 发生了变化，并且该数字可以在列表页接口获取到。  
   
 通过开发者工具继续捕获接口，得到图片详情页也是基于接口进行数据返回，筛选后得到的接口如下。  
 > <https://bbs-api.mihoyo.com/post/wapi/getPostFull?gids=5&post_id=6270759&read=1>  
+  
 目标数据源分析完毕，就可以进行基本的需求描述了。  
 ## 整理需求如下
 1. 列表页面无法批量生成，需要指定一个起始 `ID`，下一次的抓取基于该 `ID` 值；  
