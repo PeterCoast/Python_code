@@ -90,7 +90,7 @@ def request_get(url, ret_type="text", timeout=5, encoding="utf-8", host="bbs-api
 
     elif ret_type == "json":
         return res.json()
-```  
+```
 [插图6.png](https://img13.360buyimg.com/ddimg/jfs/t1/183977/20/16845/105261/6104c0a2E95478cfb/be358058f9e19c5c.png)  
 上述代码增加了 `JSON` 格式的数据返回，对于该格式的数据，你可以参考 `Python` 字典知识进行操作。  
 ## 从起始种子开始抓起
@@ -110,7 +110,7 @@ def main(last_id):
 
 if __name__ == '__main__':
     main(6356513)
-```  
+```
 该接口返回的 `JSON` 数据格式如下，重要参数为 `retcode`、`last_id`、`list`，数据都存在 `list` 中。  
 [插图7.png](https://img10.360buyimg.com/ddimg/jfs/t1/184378/22/16817/26024/6104c31eE6380b2f6/ee56e1b4c502448c.png)  
 ## 调用图片内页接口
@@ -136,7 +136,7 @@ def detail(post_id):
             img_url = img["url"]
             if (img_url.find("weigui")) < 0:
                 save_image(img_url)
-```  
+```
 声明一个全局变量 `total`，用于记录爬取图片总数，在获取图片数据时，发现存在部分 `Coser` 图片违规，估计尺度过大的原因，返回的图片链接包含字符串 `weigui.jpg`，故针对性进行数据清洗。  
 ```python
 global total
@@ -145,7 +145,7 @@ if __name__ == '__main__':
     global total
     total = 0
     main(6356513)
-```  
+```
 ## 迭代爬取
 此时代码只爬取一页数据，无法达到我们的 `3000` 张图片目标，修改 `main` 函数，实现简单递归。  
 ```python
@@ -161,7 +161,7 @@ def main(last_id):
 
     if res_json["data"]["last_id"] != "":
         return main(res_json["data"]["last_id"])
-```  
+```
 运行代码，此时图片一张一张的存储到了我们电脑中，爬取过程中为防止超时，建议自行添加 `try-catch` 跳过错误。  
 [插图8.gif](https://img13.360buyimg.com/ddimg/jfs/t1/186190/20/16872/27430/6104c34eE8ebb79c3/e32d3a2c0f39c2b8.gif)  
 [插图9.png](https://img12.360buyimg.com/ddimg/jfs/t1/194526/18/15758/680159/6104c370E646b3686/6dc4ef4026658a42.png)  

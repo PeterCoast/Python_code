@@ -30,7 +30,7 @@
 ### 图片所在标签位置代码如下：
 ```html
 <li><a href="/desk/23397.htm" title="陆萱萱 白色衬衫  裙子 职业装 美女模特壁纸 更新时间：2021-04-11" target="_blank"><img src="http://img.netbian.com/file/2021/0411/small30caf1465200926b08db3893c6f35f6c1618152842.jpg" alt="陆萱萱 白色衬衫  裙子 职业装 美女模特壁纸"><b>陆萱萱 白色衬衫  裙子 职业装 美女模特壁纸</b></a></li>
-```  
+```
 页面地址为 `/desk/23397.htm`
 ## 整理需求如下
 1. 生成所有列表页 URL 地址；
@@ -59,7 +59,7 @@ def save_image():
 
     if __name__ == '__main__':
         main()
-```  
+```
 先实现 10 行代码抓美女图，举个例子，在正式开始前，需要略微了解一些前端知识与正则表达式知识。  
   
 例如通过开发者工具查看网页，得到图片素材都在 `<div class="list">` 和 `<div class="page">` 这两个标签中，首先要做的就是拆解字符串，取出目标数据部分  
@@ -76,7 +76,7 @@ def main():
     res.encoding = "GBK"
     print(res.text)
 
-```  
+```
 使用 `requests` 模块的 `get` 方法即可获取网页数据，其中的参数分别是请求地址，请求头，等待时间。  
   
 请求头字段中的 `User-Agent`，可以先使用我提供给你的内容，也可以通过开发者工具，进行获取。  
@@ -98,8 +98,8 @@ def format(text):
     end = text.find(page_html)
     origin_text = text[start:end]
 
-```  
-最终得到的 origin_text 就是我们的目标文本。
+```
+最终得到的 `origin_text` 就是我们的目标文本。
 ### 通过 `re` 模块解析目标文本
 上文返回的目标文本如下所示，本小节的目标就是获取到图片详情页地址。  
 [插图4.png](https://img13.360buyimg.com/ddimg/jfs/t1/196662/28/15565/185230/6102f8f2E064f433c/fc76dcdb9da9b75d.png)  
@@ -118,7 +118,7 @@ def format(text):
     pattern = re.compile('href="(.*?)"')
     hrefs = pattern.findall(origin_text)
     print(hrefs)
-```  
+```
 其中 `re.compile` 方法中传递的就是正则表达式，它是一种检索字符串特定内容的语法结构。  
   
 例如  
@@ -140,7 +140,7 @@ def format(text):
     hrefs = pattern.findall(origin_text)
     hrefs = [i for i in hrefs if i.find("desk")>0]
     print(hrefs)
-```  
+```
 ### 抓取内页数据
 获取到列表页地址之后，就可以对图片内页数据进行获取了，这里用到的技术与前文逻辑一致。  
 ```python
@@ -162,7 +162,7 @@ def format(text, headers):
         res.encoding = "GBK"
         format_detail(res.text)
         break
-```  
+```
 在第一次循环中增加了 `break`，跳出循环，`format_detail` 函数用于格式化内页数据，依旧采用格式化字符串的形式进行。  
   
 由于每页只有一张图片是目标数据，故使用的是 `re.search` 进行检索，同时调用该对象的 `group` 方法对数据进行提取。  
@@ -179,7 +179,7 @@ def format_detail(text):
     image_src = pattern.search(origin_text).group(1)
     # 保存图片
     save_image(image_src)
-```  
+```
 保存图片部分，需要提前导入 `time` 模块，对图片进行重命名。  
   
 使用 `requests.get` 方法直接请求图片地址，调用响应对象的 `content` 属性，获取二进制流，然后使用 `f.write` 存储成图片。  
@@ -190,7 +190,7 @@ def save_image(image_src):
     content = res.content
     with open(f"{str(time.time())}.jpg", "wb") as f:
         f.write(content)
-```  
+```
 ### 优化代码
 将代码重复逻辑进行提取，封装成公用函数，最终整理之后的代码如下：
 ```python
@@ -259,7 +259,7 @@ def save_image(image_src):
 if __name__ == '__main__':
     main()
 
-```  
+```
 [插图7.png](https://img12.360buyimg.com/ddimg/jfs/t1/189263/19/15713/61726/6102fdb9E2439298f/db3079e49480ba30.png)  
 ### 目标 2000 张
 20 张图片的爬取已经得到，下面目标 2000 张，初学阶段按照这种简单的方式抓取即可。  
@@ -275,7 +275,7 @@ def main():
         print("抓取列表页地址为：", url)
         text = request_get(url)
         format(text)
-```  
+```
 [插图8.png](https://img14.360buyimg.com/ddimg/jfs/t1/195867/12/15702/810562/6102fe27Ef766788d/0f2db6cec5612631.png)  
 ## 完整代码下载地址：
 * [main.py](./main.py)

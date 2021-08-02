@@ -62,7 +62,7 @@ def get_image(base_url):
 
 				print(match_list)
 
-```  
+```
 此时获取到的就是图片的真实地址，调用 `save_image` 函数，对远程图片进行存储。其中 `title` 为图片存储地址。  
 ```pythpn
 def save_image(url, title):
@@ -78,7 +78,7 @@ try:
 	except Exception as e:
 			print(e)
 
-```  
+```
 最后使用多线程进行爬取，开启 5 个线程，当所有线程结束运行时，停止整体代码。  
 ```python
 if __name__ == '__main__':
@@ -93,7 +93,7 @@ while threading.active_count() != 1:
 	pass
 else:
 	print('所有线程运行完毕')
-```  
+```
 运行我们的爬虫程序，会看到图片批量的存储到了本地。  
   
 # 抓取结果展示时间
